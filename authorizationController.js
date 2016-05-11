@@ -1,17 +1,17 @@
 var authorizationController = angular.module('authorizationController', []);
  
-authorizationController.controller('loginCtrl', ['$scope', 'authorizationCompany', '$location', 
-function($scope, authorizationCompany, $location){
+authorizationController.controller('loginCtrl', ['$scope', 'authorizationfactory', '$location', 
+function($scope, authorizationFactory, $location){
   $scope.loginClick = function() {
-    if (authorizationCompany.login($scope.login, $scope.pass)) {
-      $location.path('/company');
+    if (authorizationfactory.login($scope.login, $scope.pass)) {
+      $location.path('/factory');
     } else {
       alert('Данные введены неверно');
     }
   }
 }]);
  
-authorizationController.company('authorizationCompany',['$userProvider',
+authorizationController.factory('authorizationfactory',['$userProvider',
   function($userProvider){
     var login = function(login, pass){
       if (pass !== '123456') {
@@ -20,6 +20,9 @@ authorizationController.company('authorizationCompany',['$userProvider',
       if (login === 'admin') {
         $userProvider.setUser({Login: login, Roles: [$userProvider.rolesEnum.Admin]});
       } 
+	  else {
+		$userProvider.setUser({Login: login, Roles: [$userProvider.rolesEnum.User]});
+	  }
       return true;
     }
  
@@ -28,9 +31,10 @@ authorizationController.company('authorizationCompany',['$userProvider',
     }
 }]);
  
-authorizationController.company('$userProvider', function(){
+authorizationController.factory('$userProvider', function(){
   var rolesEnum = {
-    Admin: 0
+    Admin: 0,
+	User: 1
   };
   var setUser = function(u){
     user = u;
