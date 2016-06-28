@@ -26,34 +26,30 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
+	
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => '',/*'My Company',*/
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+/*
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Сотрудники', 'url' => ['/site/workers']],
-			['label' => 'Должности', 'url' => ['/site/posts']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
+            ['label' => 'Главная', 'url' => ['index.php/site/index']],
+            ['label' => 'About', 'url' => ['index.php/site/about']],
+            ['label' => 'Contact', 'url' => ['index.php/site/contact']],
+            Yii::$app->user->isGuest ?
+                ['label' => 'Login', 'url' => ['index.php/site/login']] :
+                [
+                    'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+                    'url' => ['index.php/site/logout'],
+                    'linkOptions' => ['data-method' => 'post']
+                ],
         ],
-    ]);
+    ]);*/
     NavBar::end();
     ?>
 
@@ -67,7 +63,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Судоходная компания <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
