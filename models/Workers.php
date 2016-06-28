@@ -2,26 +2,30 @@
 
 namespace app\models;
 
-class Workers extends \yii\db\ActiveRecord{
-	
-	public static function tableName() {
-		
+use yii\db\ActiveRecord;
+
+class Workers extends ActiveRecord
+{
+	public static function tableName()
+	{
 		return 'tblWorkers';
 	}
-	
-	public static function getAll() {
-		
-		$data = self::find()->all();
-		
-		return $data;
+	public function rules()
+	{
+		return [
+		    [['tabelNumber','name','surname','secondName','dateBirthday','idPost','address','telephone','telHome','telWork','firedStatus'], 'required'],
+		];
 	}
 	
-	public static function getOne($id) {
-		
-		$data = self::find()->where(['id'=>$id])
-		->one();
-		
-		return $data;
-	}
-	
+	public function getPost()
+{
+    return $this->hasOne(Posts::className(), ['id' => 'idPost']);
+}
+ 
+	public function getPostName()
+{
+    $post = $this->post;
+ 
+    return $post ? $post->post : '';
+}
 }
