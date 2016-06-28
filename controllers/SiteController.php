@@ -6,10 +6,8 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use app\models\Workers;
-use app\models\Login;
-use app\models\Posts;
-
+use app\models\LoginForm;
+use app\models\ContactForm;
 
 class SiteController extends Controller
 {
@@ -54,9 +52,9 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
-  /*  public function actionLogin()
+    public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+        if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
@@ -68,7 +66,7 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-*/
+
     public function actionLogout()
     {
         Yii::$app->user->logout();
@@ -93,50 +91,4 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
-	
-	public function actionWorkers()
-    {
-        $var = 'Список сотрудников';
-		
-		$array = Workers::getAll();
-		
-		return $this->render('workers',['varInView'=>$var,'arrayInView'=>$array]);
-    }
-	
-	public function actionView($id) {
-		
-		$one = Workers::getOne($id);
-		return $this->render('view', ['one'=>$one]);
-	}
-	
-	public function actionLogin() {
-		
-		$login_model = new Login();
-		
-		if(Yii::$app->request->post('Login')){
-			
-			$login_model->attributes = Yii::$app->request->post('Login');	
-			
-			if ($login_model->validate()) {
-				var_dump('Мы прошли валидацию'); die();
-			}
-		}
-		
-		return $this->render('login',['login_model'=>$login_model]);
-	}
-	
-	public function actionPosts()
-    {
-        $var = 'Список должностей';
-		
-		$array = Posts::getAll();
-		
-		return $this->render('posts',['varInView'=>$var,'arrayInView'=>$array]);
-    }
-	
-	/*public function actionViewPosts($id) {
-		
-		$one = Posts::getOne($id);
-		return $this->render('view', ['one'=>$one]);
-	} */
 }
